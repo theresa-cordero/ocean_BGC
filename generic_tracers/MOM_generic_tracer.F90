@@ -551,7 +551,7 @@ subroutine  g_tracer_initialize_sponges(G, GV, US, CS, param_file, Layer_CSp, AL
   inputdir = slasher(inputdir)
   call get_param(param_file, mdl, "SPONGE_GT_DAMPING_FILE", damping_file, &
                  "The name of the file with the sponge damping rates.") !, &
-  call get_param(param_file, mdl, "SPONGE_IDAMP_VAR", Idamp_var, &
+  call get_param(param_file, mdl, "SPONGE_GT_IDAMP_VAR", Idamp_var, &
                  "The name of the inverse damping rate variable in "//&
                  "SPONGE_DAMPING_FILE.", default="Idamp")
   call get_param(param_file, mdl, "USE_REGRIDDING", use_ALE, default=.false., do_not_log=.true.)
@@ -623,14 +623,19 @@ subroutine  g_tracer_initialize_sponges(G, GV, US, CS, param_file, Layer_CSp, AL
           allocate(tmp_GT(isd:ied,jsd:jed,nz_data))
           call MOM_read_data(filename, tmp_var, tmp_GT(:,:,:), G%Domain) !, scale=US%degC_to_C)
 
+          call initialize_ALE_sponge(Idamp, G, GV, param_file, ALE_CSp, dz, nz_data, &
+                                     data_h_is_Z=.true., Idamp_GT=Idamp)
+
           call set_up_ALE_sponge_field(tmp_GT, G, GV, g_tracer_ptr, &
                                        ALE_CSp, trim(g_tracer_name))
           deallocate(tmp_GT)
           deallocate(dz)
 
         else
+          call initialize_ALE_sponge(Idamp, G, GV, US, param_file, ALE_CSp, Iresttime_GT_in=Idamp)
+          ! ### this is where I need to add the integer for using GT sponge Idamp
           call set_up_ALE_sponge_field(filename, tmp_var, Time, G, GV, US, g_tracer_ptr, &
-                                       ALE_CSp, trim(g_tracer_name))
+                                       ALE_CSp, trim(g_tracer_name), which_iresttime = 1)
         endif
       endif
     endif
