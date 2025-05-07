@@ -624,10 +624,10 @@ subroutine  g_tracer_initialize_sponges(G, GV, US, CS, param_file, Layer_CSp, AL
           call MOM_read_data(filename, tmp_var, tmp_GT(:,:,:), G%Domain) !, scale=US%degC_to_C)
 
           call initialize_ALE_sponge(Idamp, G, GV, param_file, ALE_CSp, dz, nz_data, &
-                                     data_h_is_Z=.true., Idamp_GT=Idamp)
+                                     Iresttime_GT_in=Idamp, data_h_is_Z=.true.)
 
           call set_up_ALE_sponge_field(tmp_GT, G, GV, g_tracer_ptr, &
-                                       ALE_CSp, trim(g_tracer_name))
+                                       ALE_CSp, trim(g_tracer_name), which_iresttime = 1)
           deallocate(tmp_GT)
           deallocate(dz)
 
