@@ -1440,7 +1440,7 @@ contains
                    "fraction of ingestion by higher predators to detritus", units="none", default=0.35)
 
     call get_param(param_file, "generic_COBALT", "frac_fastsinking", cobalt%frac_fastsinking, &
-            "Fraction of N and P detritus higher predators that is fast-sinking", default=1.0)
+                   "Fraction of N and P detritus higher predators that is fast-sinking", units="none", default=1.0)
 
     ! Radiocarbon
     call get_param(param_file, "generic_COBALT", "half_life_14c", cobalt%half_life_14c, "half_life_14c", units="s", default= 5730.0 )                  ! s
