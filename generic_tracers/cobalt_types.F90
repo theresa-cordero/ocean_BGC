@@ -98,6 +98,7 @@ module cobalt_types
      real ::  vir               !< Viral lysis loss coefficient (s-1 (mole N kg)-1)
      real ::  mort              !< mortality loss coefficient (s-1)
      real ::  exu               !< Maximum ingestion rate (dimensionless (fraction of NPP))
+     real ::  phi_sidiss_mort   !< Fraction of phytoplankton silica converted to dissolved silicate due to mortality or exudation
      real ::  tmp_pcmlim_aclm_ML !< Variable for storing depth average nutrient*temperature limitation in mixed layer
      real, ALLOCATABLE, dimension(:,:)  ::  jprod_n_100      !<
      real, ALLOCATABLE, dimension(:,:)  ::  jprod_n_new_100  !<
@@ -145,7 +146,7 @@ module cobalt_types
      real, ALLOCATABLE, dimension(:,:,:)  ::  jmortloss_fe   !<
      real, ALLOCATABLE, dimension(:,:,:)  ::  jmortloss_n    !<
      real, ALLOCATABLE, dimension(:,:,:)  ::  jmortloss_p    !<
-     real, ALLOCATABLE, dimension(:,:,:)  ::  jmortloss_sio2 !<
+     real, ALLOCATABLE, dimension(:,:,:)  ::  jdissloss_si   !<
      real, ALLOCATABLE, dimension(:,:,:)  ::  jexuloss_fe    !<
      real, ALLOCATABLE, dimension(:,:,:)  ::  jexuloss_n     !<
      real, ALLOCATABLE, dimension(:,:,:)  ::  jexuloss_p     !<
@@ -200,7 +201,7 @@ module cobalt_types
      integer ::  id_jmortloss_fe  = -1
      integer ::  id_jmortloss_n   = -1
      integer ::  id_jmortloss_p   = -1
-     integer ::  id_jmortloss_sio2= -1
+     integer ::  id_jdissloss_si = -1
      integer ::  id_jexuloss_n   = -1
      integer ::  id_jexuloss_p   = -1
      integer ::  id_jexuloss_fe  = -1
@@ -276,6 +277,7 @@ module cobalt_types
     real phi_ldop          !< fraction of ingested N/P to labile dop
     real phi_sldop         !< fraction of ingested N/P to semi-labile dop
     real phi_srdop         !< fraction of ingested N/P to semi-refractory dop
+    real phi_det_si        !< fraction of ingested Si to sidet
     real q_p_2_n           !< p:n ratio of zooplankton
     real ipa_smp           !< innate prey availability of low-light adapt. small phytos
     real ipa_mdp           !< innate prey availability of medium phytoplankton
