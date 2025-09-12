@@ -1523,11 +1523,15 @@ contains
                    "Temperature dependence of remineralization", units="deg C-1", default=0.063)
     call get_param(param_file, "generic_COBALT", "remin_ramp_scale", cobalt%remin_ramp_scale, &
                    "depth scale from the surface over which remineralization ramps up", units="m", default= 50.0)
-    ! gamma_ndet is set to produce a Martin-curve like remineralization length scale at temperatures ~10 deg. C
+    ! gamma_ndet is set to produce a e-folding length scale for fresh (unprotected) organic matter of ~190m at ~10 deg. C, 
+    ! consistent with the Martin curve. The value has been defined as a function of the sinking rate for "standard detritus 
+    ! (i.e., zooplankton fecal pellets/phytoplankton aggregates) so that the remineralization length-scale is preserved even 
+    ! if the sinking rate changed. Once established, gamma_ndet is also used for fast sinking detritus 
+    ! (i.e., unprotected organic matter is assumed to decay at similar rates regardless of whether it sinking slowly or quickly). 
+    ! This means that the ratio of the remineralization length-scale for unprotected fast sinking detritus relative to that for 
+    ! unprotected standard detritus equal the ratio of their sinking speeds (wsink_fast/wsink).
     call get_param(param_file, "generic_COBALT", "gamma_ndet", cobalt%gamma_ndet, &
                    "Remineralization rate for unprotected organic matter", units="s-1", default=cobalt%wsink/350.0)
-    call get_param(param_file, "generic_COBALT", "gamma_ndet_fast", cobalt%gamma_ndet_fast, &
-                   "Remineralization rate for fast-sinking unprotected organic matter", units="s-1", default=cobalt%wsink_fast/3500.0)
     ! mineral ballasting after Klaas and Archer (2002) and Dunne et al. (2007) (see p. 3) 
     ! conversion is 0.070 g C (g Ca)-1 to moles N (mole Ca)-1; Similar conversions below, but lith remains per gram
     call get_param(param_file, "generic_COBALT", "rpcaco3", cobalt%rpcaco3, "Organic matter protection from CaCO3", &
@@ -4982,7 +4986,8 @@ contains
                cobalt%rpcaco3*(cobalt%f_cadet_arag(i,j,k) + cobalt%f_cadet_calc(i,j,k)) - &
                cobalt%rplith*cobalt%f_lithdet(i,j,k) - cobalt%rpsio2*cobalt%f_sidet(i,j,k) )
 	      ! Adding in the remineralization from fast sinking detritus
-	      cobalt%jremin_ndet_fast(i,j,k) = cobalt%gamma_ndet_fast * cobalt%expkreminT(i,j,k) * &
+          ! Unprotected organic matter assumed to decay at the same rate (gamma_ndet) whether it sinks quickly or not
+	      cobalt%jremin_ndet_fast(i,j,k) = cobalt%gamma_ndet * cobalt%expkreminT(i,j,k) * &
 		        cobalt%f_ndet_fast(i,j,k) * (cobalt%f_o2(i,j,k) / (cobalt%k_o2 + cobalt%f_o2(i,j,k)))
           ! Augment total nh4 production and o2 consumption
           cobalt%jprod_nh4(i,j,k) = cobalt%jprod_nh4(i,j,k) + cobalt%jremin_ndet(i,j,k) + cobalt%jremin_ndet_fast(i,j,k)
@@ -4998,7 +5003,7 @@ contains
                cobalt%rpcaco3*(cobalt%f_cadet_arag(i,j,k) + cobalt%f_cadet_calc(i,j,k)) - &
                cobalt%rplith*cobalt%f_lithdet(i,j,k) - cobalt%rpsio2*cobalt%f_sidet(i,j,k) )
           ! Adding in the remineralization from fast sinking detritus
-          cobalt%jremin_ndet_fast(i,j,k) = cobalt%gamma_ndet_fast * cobalt%f_ndet_fast(i,j,k) * &
+          cobalt%jremin_ndet_fast(i,j,k) = cobalt%gamma_ndet * cobalt%f_ndet_fast(i,j,k) * &
                (cobalt%o2_min / (cobalt%k_o2 + cobalt%o2_min)) * &
                (cobalt%f_no3(i,j,k) / (cobalt%k_no3_denit + cobalt%f_no3(i,j,k))) 
           ! Augment total nh4 production and no3 consumption
