@@ -1975,17 +1975,29 @@ module COBALT_send_diag
             model_time, rmask = grid_tmask, is_in=isc, js_in=jsc, ks_in=1,ie_in=iec, je_in=jec, ke_in=nk)
           used = g_send_data(cobalt%id_jdic, cobalt%jdic, &
             model_time, rmask = grid_tmask, is_in=isc, js_in=jsc, ks_in=1,ie_in=iec, je_in=jec, ke_in=nk)
+          used = g_send_data(cobalt%id_jdich, cobalt%jdich, &
+            model_time, rmask = grid_tmask, is_in=isc, js_in=jsc, ks_in=1,ie_in=iec, je_in=jec, ke_in=nk)
           used = g_send_data(cobalt%id_jno3, cobalt%jno3, &
+            model_time, rmask = grid_tmask, is_in=isc, js_in=jsc, ks_in=1,ie_in=iec, je_in=jec, ke_in=nk)
+          used = g_send_data(cobalt%id_jno3h, cobalt%jno3h, &
             model_time, rmask = grid_tmask, is_in=isc, js_in=jsc, ks_in=1,ie_in=iec, je_in=jec, ke_in=nk)
           used = g_send_data(cobalt%id_jpo4, cobalt%jpo4, &
             model_time, rmask = grid_tmask, is_in=isc, js_in=jsc, ks_in=1,ie_in=iec, je_in=jec, ke_in=nk)
+          used = g_send_data(cobalt%id_jpo4h, cobalt%jpo4h, &
+            model_time, rmask = grid_tmask, is_in=isc, js_in=jsc, ks_in=1,ie_in=iec, je_in=jec, ke_in=nk)
           used = g_send_data(cobalt%id_jsio4, cobalt%jsio4, &
+            model_time, rmask = grid_tmask, is_in=isc, js_in=jsc, ks_in=1,ie_in=iec, je_in=jec, ke_in=nk)
+          used = g_send_data(cobalt%id_jsio4h, cobalt%jsio4h, &
             model_time, rmask = grid_tmask, is_in=isc, js_in=jsc, ks_in=1,ie_in=iec, je_in=jec, ke_in=nk)
           used = g_send_data(cobalt%id_jdic_plus_btm, cobalt%jdic_plus_btm, &
             model_time, rmask = grid_tmask, is_in=isc, js_in=jsc, ks_in=1,ie_in=iec, je_in=jec, ke_in=nk)
           used = g_send_data(cobalt%id_jnh4, cobalt%jnh4, &
             model_time, rmask = grid_tmask, is_in=isc, js_in=jsc, ks_in=1,ie_in=iec, je_in=jec, ke_in=nk)
+          used = g_send_data(cobalt%id_jnh4h, cobalt%jnh4h, &
+            model_time, rmask = grid_tmask, is_in=isc, js_in=jsc, ks_in=1,ie_in=iec, je_in=jec, ke_in=nk)
           used = g_send_data(cobalt%id_jndet, cobalt%jndet, &
+            model_time, rmask = grid_tmask, is_in=isc, js_in=jsc, ks_in=1,ie_in=iec, je_in=jec, ke_in=nk)
+          used = g_send_data(cobalt%id_jndeth, cobalt%jndeth, &
             model_time, rmask = grid_tmask, is_in=isc, js_in=jsc, ks_in=1,ie_in=iec, je_in=jec, ke_in=nk)
           used = g_send_data(cobalt%id_jndet_fast, cobalt%jndet_fast, &
             model_time, rmask = grid_tmask, is_in=isc, js_in=jsc, ks_in=1,ie_in=iec, je_in=jec, ke_in=nk)

@@ -5762,6 +5762,7 @@ contains
                              phyto(LARGE)%juptake_no3(i,j,k) - phyto(MEDIUM)%juptake_no3(i,j,k) - &
                              phyto(SMALL)%juptake_no3(i,j,k) - &
                              cobalt%jno3denit_wc(i,j,k) - cobalt%juptake_no3amx(i,j,k)
+       cobalt%jno3h(i,j,k) = cobalt%jno3(i,j,k) * dzt(i,j,k)
        cobalt%p_no3(i,j,k,tau) = cobalt%p_no3(i,j,k,tau) + &
                (cobalt%jno3(i,j,k)+cobalt%jno3_iceberg(i,j,k))*dt*grid_tmask(i,j,k)
     enddo; enddo ; enddo  !} i,j,k
@@ -5776,6 +5777,7 @@ contains
                             phyto(LARGE)%juptake_nh4(i,j,k) - phyto(MEDIUM)%juptake_nh4(i,j,k) - &
                             phyto(SMALL)%juptake_nh4(i,j,k) - &
                             cobalt%juptake_nh4nitrif(i,j,k) - cobalt%juptake_nh4amx(i,j,k)
+       cobalt%jnh4h(i,j,k) = cobalt%jnh4(i,j,k) * dzt(i,j,k)
        cobalt%p_nh4(i,j,k,tau) = cobalt%p_nh4(i,j,k,tau) + cobalt%jnh4(i,j,k) * dt * grid_tmask(i,j,k)
        !
        ! PO4
@@ -5783,6 +5785,7 @@ contains
        cobalt%jpo4(i,j,k) = cobalt%jprod_po4(i,j,k) - phyto(DIAZO)%juptake_po4(i,j,k) - &
                             phyto(LARGE)%juptake_po4(i,j,k) - phyto(MEDIUM)%juptake_po4(i,j,k) - &
                             phyto(SMALL)%juptake_po4(i,j,k)
+       cobalt%jpo4h(i,j,k) = cobalt%jpo4(i,j,k) * dzt(i,j,k)
        cobalt%p_po4(i,j,k,tau) = cobalt%p_po4(i,j,k,tau) + &
               (cobalt%jpo4(i,j,k)+cobalt%jpo4_iceberg(i,j,k)) * dt * grid_tmask(i,j,k)
        !
@@ -5790,6 +5793,7 @@ contains
        !
        cobalt%jsio4(i,j,k) = cobalt%jprod_sio4(i,j,k) - phyto(LARGE)%juptake_sio4(i,j,k) - &
                              phyto(MEDIUM)%juptake_sio4(i,j,k)
+       cobalt%jsio4h(i,j,k) = cobalt%jsio4(i,j,k) * dzt(i,j,k)
        cobalt%p_sio4(i,j,k,tau) = cobalt%p_sio4(i,j,k,tau) + cobalt%jsio4(i,j,k) * dt * grid_tmask(i,j,k)
     enddo; enddo ; enddo  !} i,j,k
 
@@ -5834,6 +5838,7 @@ contains
        cobalt%jndet(i,j,k) = cobalt%jprod_ndet(i,j,k) - cobalt%jremin_ndet(i,j,k) - &
                              cobalt%det_jzloss_n(i,j,k) - cobalt%det_jhploss_n(i,j,k)
        cobalt%jndet_fast(i,j,k) = cobalt%jprod_ndet_fast(i,j,k) - cobalt%jremin_ndet_fast(i,j,k)
+       cobalt%jndeth(i,j,k) = cobalt%jndet(i,j,k) * dzt(i,j,k)
        cobalt%p_ndet(i,j,k,tau) = cobalt%p_ndet(i,j,k,tau) + cobalt%jndet(i,j,k)*dt*grid_tmask(i,j,k)
        cobalt%p_ndet_fast(i,j,k,tau) = cobalt%p_ndet_fast(i,j,k,tau) + cobalt%jndet_fast(i,j,k)*dt*grid_tmask(i,j,k)
        !
@@ -5963,7 +5968,7 @@ contains
           cobalt%jdiss_cadet_arag(i,j,k) + cobalt%jdiss_cadet_calc(i,j,k) - &
           cobalt%jprod_cadet_arag(i,j,k) - cobalt%jprod_cadet_calc(i,j,k) - &
           cobalt%jdic_caco3_nerbur(i,j,k))
-
+       cobalt%jdich(i,j,k) = cobalt%jdic(i,j,k) * dzt(i,j,k)
        cobalt%p_dic(i,j,k,tau) = cobalt%p_dic(i,j,k,tau) + cobalt%jdic(i,j,k) * dt * grid_tmask(i,j,k)
     enddo; enddo ; enddo !} i,j,k
 !
@@ -7614,6 +7619,7 @@ contains
     allocate(cobalt%jcadet_arag(isd:ied, jsd:jed, 1:nk))  ; cobalt%jcadet_arag=0.0
     allocate(cobalt%jcadet_calc(isd:ied, jsd:jed, 1:nk))  ; cobalt%jcadet_calc=0.0
     allocate(cobalt%jdic(isd:ied, jsd:jed, 1:nk))         ; cobalt%jdic=0.0
+    allocate(cobalt%jdich(isd:ied, jsd:jed, 1:nk))        ; cobalt%jdich=0.0
     allocate(cobalt%jdic_plus_btm(isd:ied, jsd:jed, 1:nk)); cobalt%jdic_plus_btm=0.0
     allocate(cobalt%jdin_plus_btm(isd:ied, jsd:jed, 1:nk)); cobalt%jdin_plus_btm=0.0
     allocate(cobalt%jfed(isd:ied, jsd:jed, 1:nk))         ; cobalt%jfed=0.0
@@ -7628,17 +7634,21 @@ contains
     allocate(cobalt%jlith(isd:ied, jsd:jed, 1:nk))        ; cobalt%jlith=0.0
     allocate(cobalt%jlithdet(isd:ied, jsd:jed, 1:nk))     ; cobalt%jlithdet=0.0
     allocate(cobalt%jndet(isd:ied, jsd:jed, 1:nk))        ; cobalt%jndet=0.0
+    allocate(cobalt%jndeth(isd:ied, jsd:jed, 1:nk))       ; cobalt%jndeth=0.0
     allocate(cobalt%jndet_fast(isd:ied, jsd:jed, 1:nk))   ; cobalt%jndet_fast=0.0
     allocate(cobalt%jnh4(isd:ied, jsd:jed, 1:nk))         ; cobalt%jnh4=0.0
+    allocate(cobalt%jnh4h(isd:ied, jsd:jed, 1:nk))        ; cobalt%jnh4h=0.0
     allocate(cobalt%jnh4_plus_btm(isd:ied, jsd:jed, 1:nk)); cobalt%jnh4_plus_btm=0.0
     allocate(cobalt%jno3(isd:ied, jsd:jed, 1:nk))         ; cobalt%jno3=0.0
+    allocate(cobalt%jno3h(isd:ied, jsd:jed, 1:nk))        ; cobalt%jno3h=0.0
     allocate(cobalt%jno3_plus_btm(isd:ied, jsd:jed, 1:nk)); cobalt%jno3_plus_btm=0.0
     allocate(cobalt%jo2(isd:ied, jsd:jed, 1:nk))          ; cobalt%jo2=0.0
-    allocate(cobalt%jo2h(isd:ied, jsd:jed, 1:nk))          ; cobalt%jo2h=0.0
+    allocate(cobalt%jo2h(isd:ied, jsd:jed, 1:nk))         ; cobalt%jo2h=0.0
     allocate(cobalt%jo2_plus_btm(isd:ied, jsd:jed, 1:nk)) ; cobalt%jo2_plus_btm=0.0
     allocate(cobalt%jpdet(isd:ied, jsd:jed, 1:nk))        ; cobalt%jpdet=0.0
     allocate(cobalt%jpdet_fast(isd:ied, jsd:jed, 1:nk))   ; cobalt%jpdet_fast=0.0
     allocate(cobalt%jpo4(isd:ied, jsd:jed, 1:nk))         ; cobalt%jpo4=0.0
+    allocate(cobalt%jpo4h(isd:ied, jsd:jed, 1:nk))        ; cobalt%jpo4h=0.0
     allocate(cobalt%jpo4_plus_btm(isd:ied, jsd:jed, 1:nk)); cobalt%jpo4_plus_btm=0.0
     allocate(cobalt%jsrdon(isd:ied, jsd:jed, 1:nk))       ; cobalt%jsrdon=0.0
     allocate(cobalt%jsrdop(isd:ied, jsd:jed, 1:nk))       ; cobalt%jsrdop=0.0
@@ -7648,6 +7658,7 @@ contains
     allocate(cobalt%jsilg(isd:ied, jsd:jed, 1:nk))        ; cobalt%jsilg=0.0
     allocate(cobalt%jsimd(isd:ied, jsd:jed, 1:nk))        ; cobalt%jsimd=0.0
     allocate(cobalt%jsio4(isd:ied, jsd:jed, 1:nk))        ; cobalt%jsio4=0.0
+    allocate(cobalt%jsio4h(isd:ied, jsd:jed, 1:nk))        ; cobalt%jsio4h=0.0
     allocate(cobalt%jsio4_plus_btm(isd:ied, jsd:jed, 1:nk)); cobalt%jsio4_plus_btm=0.0
     allocate(cobalt%jprod_fed(isd:ied, jsd:jed, 1:nk))    ; cobalt%jprod_fed=0.0
     allocate(cobalt%jprod_fedet(isd:ied, jsd:jed, 1:nk))  ; cobalt%jprod_fedet=0.0
@@ -8209,6 +8220,7 @@ contains
     deallocate(cobalt%jcadet_arag)
     deallocate(cobalt%jcadet_calc)
     deallocate(cobalt%jdic)
+    deallocate(cobalt%jdich)
     deallocate(cobalt%jdic_plus_btm)
     deallocate(cobalt%jdin_plus_btm)
     deallocate(cobalt%jfed)
@@ -8223,10 +8235,13 @@ contains
     deallocate(cobalt%jlith)
     deallocate(cobalt%jlithdet)
     deallocate(cobalt%jndet)
+    deallocate(cobalt%jndeth)
     deallocate(cobalt%jndet_fast)
     deallocate(cobalt%jnh4)
+    deallocate(cobalt%jnh4h)
     deallocate(cobalt%jnh4_plus_btm)
     deallocate(cobalt%jno3)
+    deallocate(cobalt%jno3h)
     deallocate(cobalt%jno3_plus_btm)
     deallocate(cobalt%jo2)
     deallocate(cobalt%jo2h)
@@ -8234,6 +8249,7 @@ contains
     deallocate(cobalt%jpdet)
     deallocate(cobalt%jpdet_fast)
     deallocate(cobalt%jpo4)
+    deallocate(cobalt%jpo4h)
     deallocate(cobalt%jpo4_plus_btm)
     deallocate(cobalt%jsrdon)
     deallocate(cobalt%jsrdop)
@@ -8243,6 +8259,7 @@ contains
     deallocate(cobalt%jsilg)
     deallocate(cobalt%jsimd)
     deallocate(cobalt%jsio4)
+    deallocate(cobalt%jsio4h)
     deallocate(cobalt%jsio4_plus_btm)
     deallocate(cobalt%jprod_ndet)
     deallocate(cobalt%jprod_ndet_fast)
