@@ -655,10 +655,12 @@ module cobalt_types
           jnmdz,&
           jnlgz,&
           jalk,&
+          jalkh,&
           jalk_plus_btm,&
           jcadet_arag,&
           jcadet_calc,&
           jdic,&
+          jdich,&
           jdic_plus_btm,&
           jdin_plus_btm,&
           jfed,&
@@ -677,16 +679,21 @@ module cobalt_types
           jlith,&
           jlithdet,&
           jndet,&
+          jndeth,&
           jndet_fast,&
           jnh4,&
+          jnh4h,&
           jnh4_plus_btm,&
           jno3,&
+          jno3h,&
           jno3_plus_btm,&
           jo2,&
+          jo2h,&
           jo2_plus_btm,&
           jpdet,&
           jpdet_fast,&
           jpo4,&
+          jpo4h,&
           jpo4_plus_btm,&
           jsrdon,&
           jsrdop,&
@@ -696,6 +703,7 @@ module cobalt_types
           jsimd,&
           jsilg,&
           jsio4,&
+          jsio4h,&
           jsio4_plus_btm,&
           jprod_ndet,&
           jprod_ndet_fast,&
@@ -923,7 +931,7 @@ module cobalt_types
           wc_vert_int_jo2resp,&
           wc_vert_int_jprod_cadet,&
           wc_vert_int_jprod_cadet_arag,&
-          wc_vert_int_jprod_cadet_calc,& 
+          wc_vert_int_jprod_cadet_calc,&
           wc_vert_int_jno3denit,&
           wc_vert_int_jprod_no3nitrif,&
           wc_vert_int_juptake_nh4,&
@@ -1086,14 +1094,21 @@ module cobalt_types
           id_irr_mix       = -1,       &
           id_irr_aclm_inst = -1,       &
           id_jalk          = -1,       &
+          id_jalkh         = -1,       &
           id_jalk_plus_btm = -1,       &
           id_jdic          = -1,       &
+          id_jdich         = -1,       &
           id_jdic_plus_btm = -1,       &
           id_jnh4          = -1,       &
+          id_jnh4h         = -1,       &
           id_jno3          = -1,       &
+          id_jno3h         = -1,       &
           id_jpo4          = -1,       &
+          id_jpo4h         = -1,       &
           id_jsio4         = -1,       &
+          id_jsio4h        = -1,       &
           id_jndet         = -1,       &
+          id_jndeth        = -1,       &
           id_jndet_fast    = -1,       &
           id_jnh4_plus_btm = -1,       &
           id_jno3denit_wc  = -1,       &
@@ -1328,6 +1343,7 @@ module cobalt_types
           id_f_sio4_int_100 = -1, &
           id_jo2_plus_btm   = -1, &
           id_jo2            = -1, &
+          id_jo2h           = -1, &
           id_jalk_100       = -1, &
           id_jdic_100       = -1, &
           id_jdin_100       = -1, &
