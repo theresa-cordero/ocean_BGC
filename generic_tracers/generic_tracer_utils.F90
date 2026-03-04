@@ -26,7 +26,7 @@ module g_tracer_utils
   use mpp_mod,           only: mpp_pe, mpp_root_pe, mpp_sync
   use time_manager_mod, only : time_type
 
-  use field_manager_mod, only: fm_string_len, fm_path_name_len, fm_new_list, fm_change_list, fm_get_value
+  use field_manager_mod, only: fm_string_len, fm_new_list, fm_change_list, fm_get_value
   use field_manager_mod, only: fm_dump_list, fm_loop_over_list
 
   use fms_mod,           only: stdout
@@ -999,16 +999,23 @@ contains
 
     if(present(sink_rate)) g_tracer%sink_rate = sink_rate
 
-    call  g_tracer_add_param(trim(g_tracer%name)//"_requires_src_info",g_tracer%requires_src_info , .false.)
-
-    if(present(requires_src_info)) then
-       g_tracer%requires_src_info = requires_src_info 
-    elseif(trim(g_tracer%package_name) .eq. 'generic_cobalt' .or. &
-           trim(g_tracer%package_name) .eq. 'generic_abiotic' .or. &
-           trim(g_tracer%package_name) .eq. 'generic_bling') then !Niki: later we can make this just else
-       call  g_tracer_add_param('enforce_src_info', g_tracer%requires_src_info ,  .true.) 
+    ! Set default based on global option first (enforce_src_info)
+    if (trim(g_tracer%package_name) .eq. 'generic_cobalt' .or. &
+        trim(g_tracer%package_name) .eq. 'generic_abiotic' .or. &
+        trim(g_tracer%package_name) .eq. 'generic_bling') then
+        call g_tracer_add_param('enforce_src_info', g_tracer%requires_src_info, .true.)
+    else
+        g_tracer%requires_src_info = .false.
     endif
-       
+
+    ! Now allow per-tracer override (if defined in field_table or passed in)
+    call g_tracer_add_param(trim(g_tracer%name)//"_requires_src_info", g_tracer%requires_src_info, g_tracer%requires_src_info)
+
+    ! Finally allow hard-coded override if passed as optional argument
+    if (present(requires_src_info)) then
+        g_tracer%requires_src_info = requires_src_info
+    endif
+
     call  g_tracer_add_param(trim(g_tracer%name)//"_src_file",         g_tracer%src_file ,        'NULL') 
     call  g_tracer_add_param(trim(g_tracer%name)//"_src_var_name",     g_tracer%src_var_name ,    'NULL') 
     call  g_tracer_add_param(trim(g_tracer%name)//"_src_var_unit",     g_tracer%src_var_unit ,    'NULL') 
