@@ -3286,7 +3286,7 @@ module COBALT_reg_diag
     cobalt%id_jalk = register_diag_field(package_name, vardesc_temp%name, axes(1:3),&
          init_time, vardesc_temp%longname,vardesc_temp%units, missing_value = missing_value1)
 
-    vardesc_temp = vardesc("jalkh","Alkalinity content source",'h','L','s','mole eq kg-1 m s-1','f')
+    vardesc_temp = vardesc("jalkh","Alkalinity content source (jalk * thickness)",'h','L','s','mole eq kg-1 m s-1','f')
     cobalt%id_jalkh = register_diag_field(package_name, vardesc_temp%name, axes(1:3),&
          init_time, vardesc_temp%longname,vardesc_temp%units, missing_value = missing_value1)
 
@@ -3298,7 +3298,7 @@ module COBALT_reg_diag
     cobalt%id_jdic = register_diag_field(package_name, vardesc_temp%name, axes(1:3),&
          init_time, vardesc_temp%longname,vardesc_temp%units, missing_value = missing_value1)
 
-    vardesc_temp = vardesc("jdich","Dissolved Inorganic Carbon content source",'h','L','s','mol kg-1 m s-1','f')
+    vardesc_temp = vardesc("jdich","Dissolved Inorganic Carbon content source (jdic * thickness)",'h','L','s','mol kg-1 m s-1','f')
     cobalt%id_jdich = register_diag_field(package_name, vardesc_temp%name, axes(1:3),&
          init_time, vardesc_temp%longname,vardesc_temp%units, missing_value = missing_value1)
 
@@ -3306,7 +3306,7 @@ module COBALT_reg_diag
     cobalt%id_jno3 = register_diag_field(package_name, vardesc_temp%name, axes(1:3),&
          init_time, vardesc_temp%longname,vardesc_temp%units, missing_value = missing_value1)
 
-    vardesc_temp = vardesc("jno3h","no3 content source",'h','L','s','mol kg-1 m s-1','f')
+    vardesc_temp = vardesc("jno3h","no3 content source (jno3 * thickness)",'h','L','s','mol kg-1 m s-1','f')
     cobalt%id_jno3h = register_diag_field(package_name, vardesc_temp%name, axes(1:3),&
          init_time, vardesc_temp%longname,vardesc_temp%units, missing_value = missing_value1)
 
@@ -3314,7 +3314,7 @@ module COBALT_reg_diag
     cobalt%id_jpo4 = register_diag_field(package_name, vardesc_temp%name, axes(1:3),&
          init_time, vardesc_temp%longname,vardesc_temp%units, missing_value = missing_value1)
 
-    vardesc_temp = vardesc("jpo4h","po4 content source",'h','L','s','mol kg-1 m s-1','f')
+    vardesc_temp = vardesc("jpo4h","po4 content source (jpo4 * thickness)",'h','L','s','mol kg-1 m s-1','f')
     cobalt%id_jpo4h = register_diag_field(package_name, vardesc_temp%name, axes(1:3),&
          init_time, vardesc_temp%longname,vardesc_temp%units, missing_value = missing_value1)
 
@@ -3322,7 +3322,7 @@ module COBALT_reg_diag
     cobalt%id_jsio4 = register_diag_field(package_name, vardesc_temp%name, axes(1:3),&
          init_time, vardesc_temp%longname,vardesc_temp%units, missing_value = missing_value1)
 
-    vardesc_temp = vardesc("jsio4h","sio4 content source",'h','L','s','mol kg-1 m s-1','f')
+    vardesc_temp = vardesc("jsio4h","sio4 content source (jsio4 * thickness)",'h','L','s','mol kg-1 m s-1','f')
     cobalt%id_jsio4h = register_diag_field(package_name, vardesc_temp%name, axes(1:3),&
          init_time, vardesc_temp%longname,vardesc_temp%units, missing_value = missing_value1)
 
@@ -3334,7 +3334,7 @@ module COBALT_reg_diag
     cobalt%id_jnh4 = register_diag_field(package_name, vardesc_temp%name, axes(1:3),&
          init_time, vardesc_temp%longname,vardesc_temp%units, missing_value = missing_value1)
 
-    vardesc_temp = vardesc("jnh4h","NH4 content source",'h','L','s','mol kg-1 m s-1','f')
+    vardesc_temp = vardesc("jnh4h","NH4 content source (jnh4 * thickness)",'h','L','s','mol kg-1 m s-1','f')
     cobalt%id_jnh4h = register_diag_field(package_name, vardesc_temp%name, axes(1:3),&
          init_time, vardesc_temp%longname,vardesc_temp%units, missing_value = missing_value1)
 
@@ -3342,7 +3342,7 @@ module COBALT_reg_diag
     cobalt%id_jndet = register_diag_field(package_name, vardesc_temp%name, axes(1:3),&
          init_time, vardesc_temp%longname,vardesc_temp%units, missing_value = missing_value1)
 
-    vardesc_temp = vardesc("jndeth","NDET content source",'h','L','s','mol kg-1 m s-1','f')
+    vardesc_temp = vardesc("jndeth","NDET content source (jndet * thickness)",'h','L','s','mol kg-1 m s-1','f')
     cobalt%id_jndeth = register_diag_field(package_name, vardesc_temp%name, axes(1:3),&
          init_time, vardesc_temp%longname,vardesc_temp%units, missing_value = missing_value1)
 
@@ -3358,7 +3358,7 @@ module COBALT_reg_diag
     cobalt%id_jo2 = register_diag_field(package_name, vardesc_temp%name, axes(1:3),&
          init_time, vardesc_temp%longname,vardesc_temp%units, missing_value = missing_value1)
 
-    vardesc_temp = vardesc("jo2h","O2 content source",'h','L','s','mol kg-1 m s-1','f')
+    vardesc_temp = vardesc("jo2h","O2 content source (jo2 * thickness)",'h','L','s','mol kg-1 m s-1','f')
     cobalt%id_jo2h = register_diag_field(package_name, vardesc_temp%name, axes(1:3),&
          init_time, vardesc_temp%longname,vardesc_temp%units, missing_value = missing_value1)
 
