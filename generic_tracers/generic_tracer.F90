@@ -140,10 +140,11 @@ module generic_tracer
   logical :: generic_tracer_register_called = .false.
   logical :: force_update_fluxes = .false.
   character(len=10) :: as_param   = 'W14'     ! Use Wanninkhoff 2014 parameters for air-sea gas transfer by default
-
+  logical :: use_Press_et_al_tridiag_solver = .false.  ! Use the tridiagonal solver from Press et al. (Numerical Recipes) for vertical diffusion correction
+     
   namelist /generic_tracer_nml/ do_generic_tracer, do_generic_abiotic, do_generic_age, do_generic_argon, do_generic_CFC, &
       do_generic_SF6, do_generic_BLING, do_generic_COBALT, &
-      force_update_fluxes, do_generic_blres, as_param, do_vertfill_post
+      force_update_fluxes, do_generic_blres, as_param, do_vertfill_post, use_Press_et_al_tridiag_solver
 
 contains
 
@@ -603,7 +604,7 @@ contains
        !Go through the list of tracers 
        do  
           if(g_tracer_is_prog(g_tracer)) then
-             call g_tracer_vertdiff_G(g_tracer,h_old, ea, eb, dt, kg_m2_to_H, m_to_H, tau)
+             call g_tracer_vertdiff_G(g_tracer,h_old, ea, eb, dt, kg_m2_to_H, m_to_H, tau, use_Press_et_al_tridiag_solver)
              if(do_vertfill_post) call g_tracer_vertfill(g_tracer, h_old, KD_SMOOTH*dt, tau=1)
           endif
           !traverse the linked list till hit NULL
