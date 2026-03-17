@@ -3197,12 +3197,13 @@ contains
   !  </IN>
   ! </SUBROUTINE>
 
-  subroutine g_tracer_vertdiff_G(g_tracer, h_old, ea, eb, dt, kg_m2_to_H, m_to_H, tau, use_PressAlgorithm)
+  subroutine g_tracer_vertdiff_G(g_tracer, h_old, ea, eb, dt, kg_m2_to_H, m_to_H, tau, use_PressAlgorithm, do_vertfill_post)
     type(g_tracer_type),    pointer  :: g_tracer
     real, dimension(g_tracer_com%isd:,g_tracer_com%jsd:,:), intent(in) :: h_old, ea, eb
     real,                   intent(in) :: dt, kg_m2_to_H, m_to_H
     integer,                intent(in) :: tau
     logical, optional ,     intent(in) :: use_PressAlgorithm
+    logical, optional,      intent(in) :: do_vertfill_post ! If true, use diffusion to reduce noise in vanished layers.
 
     ! Arguments: h_old -  Layer thickness before entrainment, in m or kg m-2.
     !                     In all the following comments the units of h_old are
@@ -3242,7 +3243,7 @@ contains
     ! In MOM6 models, all tracers are advected (both horizontally and vertically) by MOM6
     ! and also horizontally diffused by MOM6 if they are registered as MOM6 tracers
     ! (which is the case for generic tracers).
-    ! So there remains a need to vertically diffuse tracers 
+    ! So there remains a need to vertically diffuse tracers
     ! (and, if necessary vertically advect tracers due to sinking or swimming) separately by tracer packages
     ! (T&S vertdiff is again handled by MOM6).
     !
@@ -3328,6 +3329,7 @@ contains
     integer :: i, j, k, nz
     real, dimension(1:g_tracer_com%nk) :: a,b,c,f_old !local vars used in Press algorithm
     logical :: use_PressEtAl_in_vertdiff=.false.
+    real, parameter :: KD_SMOOTH = 1.0E-06 ! Diffusion coefficient for reducing noise in vanished layers.
 
     if(present(use_PressAlgorithm)) use_PressEtAl_in_vertdiff = use_PressAlgorithm
     !
@@ -3447,11 +3449,15 @@ contains
 
     enddo; enddo ! i,j
 
+    ! Do some additional diffusion if requested.
+    if (present(do_vertfill_post) .and. do_vertfill_post) then
+        call g_tracer_vertfill(g_tracer, h_old, KD_SMOOTH*dt, tau=1)
+    endif
+
    !
    !   Calculate the implicit vertical diffusion term
    !   (Note: not sure if this needs any unit conversion)
    !
-
    if (g_tracer%diag_id_vdiffuse_impl .gt. 0 .or. g_tracer%diag_id_vdiffusec_impl .gt. 0) then
       do j = g_tracer_com%jsc, g_tracer_com%jec
          do i = g_tracer_com%isc, g_tracer_com%iec

@@ -594,7 +594,6 @@ contains
     real,                   intent(in) :: dt, kg_m2_to_H, m_to_H
     integer,                intent(in) :: tau
     type(g_tracer_type), pointer    :: g_tracer,g_tracer_next
-    real :: KD_SMOOTH = 1.0E-06
 
     !nnz: Should I loop here or inside the sub g_tracer_vertdiff ?    
     !JGJ 2013/05/31  merged COBALT into siena_201303
@@ -604,8 +603,8 @@ contains
        !Go through the list of tracers 
        do  
           if(g_tracer_is_prog(g_tracer)) then
-             call g_tracer_vertdiff_G(g_tracer,h_old, ea, eb, dt, kg_m2_to_H, m_to_H, tau, use_Press_et_al_tridiag_solver)
-             if(do_vertfill_post) call g_tracer_vertfill(g_tracer, h_old, KD_SMOOTH*dt, tau=1)
+             call g_tracer_vertdiff_G(g_tracer, h_old, ea, eb, dt, &
+                 kg_m2_to_H, m_to_H, tau, use_Press_et_al_tridiag_solver, do_vertfill_post)
           endif
           !traverse the linked list till hit NULL
           call g_tracer_get_next(g_tracer, g_tracer_next)
