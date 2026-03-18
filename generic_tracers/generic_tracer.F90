@@ -136,6 +136,9 @@ module generic_tracer
   type(g_diag_type), save, pointer :: diag_list => NULL()
 
   logical :: do_generic_tracer = .false.
+  ! do_vertfill_post applies some additional diffusion at the end of the
+  ! g_tracer_vertdiff_G routine to help reduce irregularities in the vanished layers.
+  ! If not specified in the generic_tracer_nml namelist, it defaults to off.
   logical :: do_vertfill_post = .false.
   logical :: generic_tracer_register_called = .false.
   logical :: force_update_fluxes = .false.
