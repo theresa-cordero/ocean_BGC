@@ -19,8 +19,8 @@ jobs:
     runs-on: ubuntu-latest
     # define container
     container:
-       image: clouden90/1d_mom6_cobalt:withdata
-       options: --user root   
+       image: ghcr.io/noaa-gfdl/cefi-regional-mom6/1d_mom6_cobalt:base
+       options: --user=builder
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
@@ -47,7 +47,7 @@ jobs:
           cp -r ocean_BGC CEFI-regional-MOM6/src
           cd CEFI-regional-MOM6/src/ocean_BGC && git branch
 
-      - name: Copy 1D modelinput dataset
+      - name: Copy 1D model input dataset
         working-directory: ../CEFI-regional-MOM6/exps
         run: |
           ln -fs /opt/datasets ./
