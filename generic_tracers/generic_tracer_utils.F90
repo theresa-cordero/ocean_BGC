@@ -3451,8 +3451,10 @@ contains
 
     ! Do some additional diffusion if requested.
     ! This can help smooth irregularities in the vanished layers.
-    if (present(do_vertfill_post) .and. do_vertfill_post) then
-        call g_tracer_vertfill(g_tracer, h_old, KD_SMOOTH*dt, tau=1)
+    if (present(do_vertfill_post)) then
+        if (do_vertfill_post) then
+            call g_tracer_vertfill(g_tracer, h_old, KD_SMOOTH*dt, tau=1)
+        endif
     endif
 
    !
