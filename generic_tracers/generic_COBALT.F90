@@ -6419,7 +6419,8 @@ contains
                phyto(LARGE)%jprod_n(i,j,k)*phyto(LARGE)%silim(i,j,k))*rho_dzt(i,j,k)*grid_tmask(i,j,k)
           cobalt%wc_vert_int_npp_diaz(i,j) = cobalt%wc_vert_int_npp_diaz(i,j) +  phyto(DIAZO)%jprod_n(i,j,k) * &
                rho_dzt(i,j,k)*grid_tmask(i,j,k)
-          cobalt%wc_vert_int_npp_misc(i,j) = (phyto(MEDIUM)%jprod_n(i,j,k)*(1.0 - phyto(MEDIUM)%silim(i,j,k)) + &
+          cobalt%wc_vert_int_npp_misc(i,j) = cobalt%wc_vert_int_npp_misc(i,j) + &
+              (phyto(MEDIUM)%jprod_n(i,j,k)*(1.0 - phyto(MEDIUM)%silim(i,j,k)) + &
                phyto(LARGE)%jprod_n(i,j,k)*(1.0 - phyto(LARGE)%silim(i,j,k)))*rho_dzt(i,j,k)*grid_tmask(i,j,k)
           cobalt%wc_vert_int_npp_pico(i,j) = cobalt%wc_vert_int_npp_pico(i,j) +  phyto(SMALL)%jprod_n(i,j,k) * &
                rho_dzt(i,j,k)*grid_tmask(i,j,k)
